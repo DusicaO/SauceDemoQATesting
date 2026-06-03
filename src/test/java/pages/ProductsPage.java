@@ -16,9 +16,16 @@ public class ProductsPage extends BaseTest {
     @FindBy(css = "[data-test='title']")
     public WebElement productsPageTitle;
 
+    @FindBy(id = "add-to-cart-sauce-labs-backpack")
+    public WebElement addBackpackToCartButton;
+
 
     public String getPageTitle() {
         return productsPageTitle.getText();
+    }
+
+    public void clickOnAddBackpackToCartButton() {
+        addBackpackToCartButton.click();
     }
 
 }
