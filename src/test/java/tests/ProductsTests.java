@@ -79,5 +79,42 @@ public class ProductsTests extends BaseTest {
 
     }
 
+    @Test
+    public void userCanAddSingleProduct() {
+        startingPage.logIn(BuiltInUsers.STANDARD_USER, BuiltInUsers.PASSWORD);
+
+        productsPage.clickOnAddBackpackToCartButton();
+
+        Assert.assertEquals(header.getCartBadgeText(), "1");
+        Assert.assertTrue(productsPage.removeBackpackButton.isDisplayed());
+    }
+
+    @Test
+    public void userCamRemoveProductFromProductsPage() {
+        startingPage.logIn(BuiltInUsers.STANDARD_USER, BuiltInUsers.PASSWORD);
+
+        productsPage.clickOnAddBackpackToCartButton();
+
+        Assert.assertEquals(header.getCartBadgeText(), "1");
+        Assert.assertTrue(productsPage.removeBackpackButton.isDisplayed());
+
+        productsPage.removeBackpackButton.click();
+
+        Assert.assertTrue(header.isCartBadgeRemoved());
+        Assert.assertTrue(productsPage.isAddBackpackToCartButtonDisplayed());
+    }
+
+    // dva gornja testa pokrivaju  i Button changes to Remove, Cart badge updates after remove,
+    // button changes back to Add to cart, Cart matches number of added products
+
+    @Test
+    public void userCanAddMultipleProductsToCart() {
+        startingPage.logIn(BuiltInUsers.STANDARD_USER, BuiltInUsers.PASSWORD);
+
+        int numberOfAddedProducts = productsPage.addRandomProductsToCart();
+
+        Assert.assertEquals(header.getCartBadgeText(), String.valueOf(numberOfAddedProducts));
+    }
+
 
 }

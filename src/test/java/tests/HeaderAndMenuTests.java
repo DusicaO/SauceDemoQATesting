@@ -100,7 +100,7 @@ public class HeaderAndMenuTests extends BaseTest {
     }
 
     // NOTE Disabled because of BUG001
-    @Test(enabled = false)
+    @Test/*(enabled = false)*/
     public void resetAppStateClearsCart() {
         startingPage.logIn(BuiltInUsers.STANDARD_USER, BuiltInUsers.PASSWORD);
 

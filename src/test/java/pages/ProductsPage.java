@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ProductsPage extends BaseTest {
 
@@ -33,6 +34,9 @@ public class ProductsPage extends BaseTest {
 
     @FindBy(className = "product_sort_container")
     public WebElement sortDropdown;
+
+    @FindBy(css = ".btn_inventory")
+    public List<WebElement> productButtons;
 
 
     public String getPageTitle() {
@@ -123,6 +127,36 @@ public class ProductsPage extends BaseTest {
             itemPrices.add(price);
         }
         return itemPrices;
+    }
+
+    public int numberOfProductButtons() {
+        return productButtons.size();
+    }
+
+    public void clickRandomProductButton() {
+        //Random - klasa iz biblioteke koja sluzi za generisanje nasumicnih brojeva
+        Random random = new Random();
+
+        //nextInt - metoda klase Random - daj mi sledeci nasumicni broj u zadatom opsegu
+        int randomIndex = random.nextInt(productButtons.size());
+
+        productButtons.get(randomIndex).click();
+    }
+
+
+    public int addRandomProductsToCart() {
+        Random random = new Random();
+
+        int numberOfProductsToAdd = random.nextInt(productButtons.size()) + 1;
+
+        List<WebElement> shuffledProductsButton = new ArrayList<>(productButtons);
+
+        java.util.Collections.shuffle(shuffledProductsButton);
+
+        for(int i = 0; i < numberOfProductsToAdd; i++) {
+            shuffledProductsButton.get(i).click();
+        }
+        return numberOfProductsToAdd;
     }
 
 }
