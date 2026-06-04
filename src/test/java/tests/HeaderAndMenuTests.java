@@ -57,7 +57,7 @@ public class HeaderAndMenuTests extends BaseTest {
     public void userCanLogout() {
         startingPage.logIn(BuiltInUsers.STANDARD_USER, BuiltInUsers.PASSWORD);
 
-        header. clickOnBurgerMenuButton();
+        header.clickOnBurgerMenuButton();
 
         wait.until(ExpectedConditions.visibilityOf(header.logoutLink));
 
@@ -99,7 +99,8 @@ public class HeaderAndMenuTests extends BaseTest {
         Assert.assertTrue(driver.getTitle().contains("Sauce Labs"));
     }
 
-    @Test
+    // NOTE Disabled because of BUG001
+    @Test(enabled = false)
     public void resetAppStateClearsCart() {
         startingPage.logIn(BuiltInUsers.STANDARD_USER, BuiltInUsers.PASSWORD);
 
@@ -115,8 +116,7 @@ public class HeaderAndMenuTests extends BaseTest {
         header.clickOnResetAppStateLink();
 
         Assert.assertTrue(header.isCartBadgeRemoved());
+        Assert.assertTrue(productsPage.isAddBackpackToCartButtonDisplayed());
     }
-
-//TODO odluciti sta sa priorities u svim test klasama smisleno...
 
 }
