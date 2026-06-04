@@ -1,5 +1,6 @@
 package base;
 
+import application.BuiltInUsers;
 import application.URLs;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

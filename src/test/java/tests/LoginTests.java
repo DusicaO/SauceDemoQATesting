@@ -3,14 +3,15 @@ package tests;
 import application.BuiltInUsers;
 import application.URLs;
 import base.BaseTest;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class LoginTest extends BaseTest {
+//TODO odluciti sta sa priorities u svim test klasama smisleno...
 
-    //region login flow with one of the builtin users
+public class LoginTests extends BaseTest {
+
+    //login flow with one of the builtin users
     //test case LG001
     @Test(priority = 10)
     public void standardUserCanLogIn() {
@@ -35,9 +36,9 @@ public class LoginTest extends BaseTest {
 
     //enriched test case LG008 - after each failed login combination
     @Test(dataProvider = "invalidLoginData", priority = 30)
-    public void userCanLogInAfterFailedLoginAttempt( String username,
-                                                     String password,
-                                                     String unusedParameter) {
+    public void userCanLogInAfterFailedLoginAttempt(String username,
+                                                    String password,
+                                                    String unusedParameter) {
 
         startingPage.logIn(username, password);
 
@@ -68,9 +69,10 @@ public class LoginTest extends BaseTest {
 
         //TODO are there more meaningful additional verifications for either step?
     }
-    //endregion
 
-    //region login with all other builtin users
+    //-------------------------
+
+    //login with all other builtin users
     @Test(priority = 50)
     public void lockedOutUserCannotLogIn() {
         startingPage.logIn(BuiltInUsers.LOCKED_OUT_USER, BuiltInUsers.PASSWORD);
@@ -81,20 +83,18 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(dataProvider = "allOtherBuiltInUsers", priority = 60)
-    public void allOtherBuiltInUsersCanLogIn(String username) {
+    public void specialUsersCanLogIn(String username) {
         startingPage.logIn(username, BuiltInUsers.PASSWORD);
 
         Assert.assertEquals(driver.getCurrentUrl(), URLs.PRODUCTS_PAGE_URL);
         Assert.assertEquals(productsPage.getPageTitle(), "Products");
 
         //performance_glitch_user login was stable in repeated runs without additional explicit wait.
-        // TODO Investigate why performance_glitch_user login repeatedly passes without additional wait.
+        //TODO Investigate why performance_glitch_user login repeatedly passes without additional wait.
     }
-    //endregion
 
 
     //----------------------------------
-
     //username, password, expectedErrorMessage
     @DataProvider(name = "invalidLoginData")
     public Object[][] invalidLoginData() {
@@ -116,13 +116,12 @@ public class LoginTest extends BaseTest {
 
     @DataProvider(name = "allOtherBuiltInUsers")
     public Object[][] builtinValidUsers() {
-        return new Object[][] {
+        return new Object[][]{
                 {BuiltInUsers.PROBLEM_USER},
                 {BuiltInUsers.PERFORMANCE_GLITCH_USER},
                 {BuiltInUsers.ERROR_USER},
                 {BuiltInUsers.VISUAL_USER}
         };
     }
-
 
 }
